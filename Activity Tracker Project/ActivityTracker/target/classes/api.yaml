@@ -1,0 +1,191 @@
+openapi: 3.0.0
+info:
+  title: Activity Tracker
+  description: Activity Tracker
+  version: 0.0.1
+servers:
+- url: https://localhost:8080/
+paths:
+  /records:
+    get:
+      summary: obtains all records
+      description: gets all the records
+      operationId: getAllRecords
+      responses:
+        "200":
+          description: Returned all records.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Record'
+        "400":
+          description: Did not work.
+  /records/{date}:
+    get:
+      summary: Find record by date
+      description: Returns a single record
+      operationId: getRecordByDate
+      parameters:
+      - name: date
+        in: path
+        description: date of record
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Record'
+        "400":
+          description: Invalid date supplied
+  /activities:
+    get:
+      summary: obtains all activities
+      description: gets all the activities
+      operationId: getAllActivities
+      responses:
+        "200":
+          description: Returned all activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity'
+        "400":
+          description: Did not work.
+  /activities/{date}:
+    get:
+      summary: Find activities summary by date
+      description: Returns activities summary
+      operationId: getActivitiesByDate
+      parameters:
+      - name: date
+        in: path
+        description: date of record
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity'
+        "400":
+          description: Invalid date supplied
+  /segmentTypes:
+    get:
+      summary: obtains all segment types
+      description: gets all the segment types
+      operationId: getAllSegmentTypes
+      responses:
+        "200":
+          description: Returned all segment types
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SegmentTypes'
+        "400":
+          description: Did not work.
+  /places:
+    get:
+      summary: obtains all places
+      description: gets all the places
+      operationId: getAllPlaces
+      responses:
+        "200":
+          description: Returned all places
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Places'
+        "400":
+          description: Did not work.
+components:
+  schemas:
+    Record:
+      required:
+      - calorieIdle
+      - date
+      - lastupdated
+      properties:
+        date:
+          type: string
+        calorieIdle:
+          type: integer
+        lastupdated:
+          type: string
+      description: This is the records model
+    Activity:
+      required:
+      - activity
+      - calories
+      - distance
+      - duration
+      - endTime
+      - startTime
+      - steps
+      properties:
+        startTime:
+          type: string
+        endTime:
+          type: string
+        activity:
+          type: string
+        duration:
+          type: number
+        distance:
+          type: number
+        calories:
+          type: number
+        steps:
+          type: integer
+      description: This is the activity model
+    SegmentTypes:
+      required:
+      - date
+      - endTime
+      - lastupdate
+      - startTime
+      - type
+      properties:
+        date:
+          type: string
+        type:
+          type: string
+        startTime:
+          type: string
+        endTime:
+          type: string
+        lastupdated:
+          type: string
+      description: This is the segment types model
+    Places:
+      required:
+      - name
+      - type
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+      description: This is the placds model
